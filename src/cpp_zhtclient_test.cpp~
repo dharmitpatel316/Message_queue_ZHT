@@ -294,7 +294,7 @@ void dharmit_append(){
 	printf("Enter the key=");
 	cin>>key;
 	printf("Enter the value");
-	cin>>val;
+	getline(cin,val);
 
 	int rc = zc.append(key, val);
 
