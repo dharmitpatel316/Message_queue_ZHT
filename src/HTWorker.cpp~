@@ -103,10 +103,10 @@ string HTWorker::run(const char *buf) {
 	} else if (zpack.opcode() == Const::ZSC_OPC_STCHGCB) {
 
 		result = state_change_callback(zpack);
-	} else if(zpack.opcode() == Const::ZSC_OPC_CREATE_QUEUE){
+	}else if(zpack.opcode() == Const::ZSC_OPC_CREATE_QUEUE){
      
         result=create_queue(zpack);
-    	} else {
+    	}else {
 
 		result = Const::ZSC_REC_UOPC;
 	}

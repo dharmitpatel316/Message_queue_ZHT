@@ -47,6 +47,7 @@ void dharmit_insert();
 void dharmit_lookup();
 void dharmit_remove();
 void dharmit_append();
+void dharmit_create_queue();
 void runn();
 void printUsage(char *argv_0);
 
@@ -108,6 +109,7 @@ void runn(){
 	printf("3. Remove\n");
 	printf("4. Append\n");
 	printf("5. exit\n");
+	printf("6. Create Queue");
 	printf("Enter the option to select=");
 	scanf("%d",&n);
 	
@@ -131,6 +133,11 @@ void runn(){
 			case 5:
 				exit;
 			break;
+			case 6:
+			dharmit_create_queue();
+			break;
+			default:
+				break;
 		}
 
 	}
@@ -218,7 +225,22 @@ void dharmit_insert(){
 		printf("INSERT ERR, rc(%d)\n", rc);
 	
 }
+void dharmit_create_queue(){
 
+	string key;
+	string val;
+	printf("Enter the key=");
+	cin>>key;
+	printf("Enter the value=");
+	cin>>val;
+	int rc = zc.create_queue(key, val);
+
+	if (rc == 0)
+		printf("INSERT OK, rc(%d)\n", rc);
+	else
+		printf("INSERT ERR, rc(%d)\n", rc);
+
+}
 void test_insert() {
 
 	string key = "goodman";
