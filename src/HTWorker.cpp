@@ -200,6 +200,11 @@ string HTWorker::create_queue_shared(const ZPack &zpack){
 		return Const::ZSC_REC_EMPTYKEY; //-1
     
 	string key = zpack.key();
+	cout<<"key="<<key<<endl;
+	string value1=zpack.val();
+	string value2=zpack.newval();
+	cout<<"value1="<<value1<<endl;
+	cout<<"value2="<<value2<<endl;	
 	int ret = PMAP->put(key, zpack.SerializeAsString());
     
 	if (ret != 0) {
