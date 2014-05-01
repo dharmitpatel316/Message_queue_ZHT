@@ -29,6 +29,7 @@
  */
 
 #include "cpp_zhtclient.h"
+#include "uuid.h"
 
 #include  <getopt.h>
 #include  <stdlib.h>
@@ -43,6 +44,7 @@ void test_lookup();
 void test_remove();
 void test_append();
 
+void create_uuid();
 void dharmit_insert();
 void dharmit_lookup();
 void dharmit_remove();
@@ -109,7 +111,8 @@ void runn(){
 	printf("3. Remove\n");
 	printf("4. Append\n");
 	printf("5. exit\n");
-	printf("6. Create Queue");
+	printf("6. Create Queue\n");
+	printf("7. Create UUID\n");
 	printf("Enter the option to select=");
 	scanf("%d",&n);
 	
@@ -135,6 +138,9 @@ void runn(){
 			break;
 			case 6:
 			dharmit_create_queue();
+			break;
+			case 7"
+			create_uuid();
 			break;
 			default:
 				break;
@@ -210,6 +216,10 @@ void printUsage(char *argv_0) {
 			"-z zht.conf -n neighbor.conf [-h(help)]");
 }
 
+void create_uuid(){
+	Uuid* s=new Uuid();
+	std::cout<<s->generate_uuid(); 
+}
 void dharmit_insert(){
 	string key;
 	string val;

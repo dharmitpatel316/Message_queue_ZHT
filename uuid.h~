@@ -1,0 +1,7 @@
+class Uuid{
+	
+public:
+string generate_uuid(void);
+Uuid(){
+	}
+};
