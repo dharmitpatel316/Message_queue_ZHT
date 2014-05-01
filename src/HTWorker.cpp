@@ -56,7 +56,13 @@ WorkerThreadArg::~WorkerThreadArg() {
 
 NoVoHT* HTWorker::PMAP = NULL;
 
+queue<string>* HTWorker::metadata = new queue<string>;
+
+queue<string>* HTWorker::uuiddata = new queue<string>;
+
 HTWorker::QUEUE* HTWorker::PQUEUE = new QUEUE();
+
+
 
 bool HTWorker::FIRST_ASYNC = false;
 
@@ -200,13 +206,23 @@ string HTWorker::create_queue_shared(const ZPack &zpack){
 		return Const::ZSC_REC_EMPTYKEY; //-1
     
 	string key = zpack.key();
+	metadata->push(key);
+		
 	cout<<"key="<<key<<endl;
 	string value1=zpack.val();
 	string value2=zpack.newval();
+
+	metadata->push(value1);
+
+	
 	cout<<"value1="<<value1<<endl;
 	cout<<"value2="<<value2<<endl;	
+	cout<<"size="<<metadata->size()<<endl;
 	int ret = PMAP->put(key, zpack.SerializeAsString());
     
+	
+
+
 	if (ret != 0) {
         
 		printf("thread[%lu] DB Error: fail to insert, rcode = %d\n",
