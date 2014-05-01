@@ -112,12 +112,49 @@ string HTWorker::run(const char *buf) {
 	} else if(zpack.opcode() == Const::ZSC_OPC_CREATE_QUEUE){
      
         result=create_queue(zpack);
+    	}else if(zpack.opcode() == Const::ZSC_OPC_PUSH){
+        
+    	    result=push(zpack);
+    	}else if(zpack.opcode() == Const::ZSC_OPC_POP){
+        
+    	    result=pop(zpack);
+    	}else if(zpack.opcode() == Const::ZSC_OPC_DELETE_QUEUE){
+        
+    	    result=delete_queue(zpack);
+    	}else if(zpack.opcode() == Const::ZSC_OPC_FETCH_NODE){
+        
+    	    result=fetch_node(zpack);
     	} else {
 
 		result = Const::ZSC_REC_UOPC;
 	}
 
 	return result;
+}
+
+string HTWorker::push(const ZPack &zpack){
+    return "";
+}
+string HTWorker::push_shared(const ZPack &zpack){
+    return "";
+}
+string HTWorker::pop(const ZPack &zpack){
+    return "";
+}
+string HTWorker::pop_shared(const ZPack &zpack){
+    return "";
+}
+string HTWorker::delete_queue(const ZPack &zpack){
+    return "";
+}
+string HTWorker::delete_queue_shared(const ZPack &zpack){
+    return "";
+}
+string HTWorker::fetch_node(const ZPack &zpack){
+    return "";
+}
+string HTWorker::fetch_node_shared(const ZPack &zpack){
+    return "";
 }
 
 string HTWorker::insert_shared(const ZPack &zpack) {

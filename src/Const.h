@@ -166,7 +166,11 @@ public:
 	static const string ZSC_OPC_INSERT; //insert item
 	static const string ZSC_OPC_APPEND; //append item
 
-	static const string ZSC_OPC_CREATE_QUEUE;	
+	static const string ZSC_OPC_CREATE_QUEUE;
+	static const string ZSC_OPC_PUSH;
+    	static const string ZSC_OPC_POP;
+    	static const string ZSC_OPC_DELETE_QUEUE;
+    	static const string ZSC_OPC_FETCH_NODE;	
 
 	static const string ZSC_OPC_CMPSWP; //compare and swap item
 	static const string ZSC_OPC_STCHGCB; //state change call back
@@ -203,6 +207,10 @@ public:
 	static const int ZSI_OPC_CMPSWP; //compare and swap
 
 	static const int ZSI_OPC_CREATE_QUEUE;
+ 	static const int ZSI_OPC_PUSH;
+    	static const int ZSI_OPC_POP;
+    	static const int ZSI_OPC_DELETE_QUEUE;
+    	static const int ZSI_OPC_FETCH_NODE;	
 
 	static const int ZSI_OPC_BRDDN_GMEM; //broadcast global membership done
 	static const int ZSI_OPC_OPR_CANCEL; //cancel an operation

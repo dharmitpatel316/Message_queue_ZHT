@@ -91,7 +91,11 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 			&& opcode != Const::ZSC_OPC_APPEND
 			&& opcode != Const::ZSC_OPC_CMPSWP
 			&& opcode != Const::ZSC_OPC_STCHGCB
-			&& opcode != Const::ZSC_OPC_CREATE_QUEUE)
+			&& opcode != Const::ZSC_OPC_CREATE_QUEUE
+			&& opcode !=Const::ZSC_OPC_PUSH
+            		&& opcode !=Const::ZSC_OPC_POP
+            		&& opcode !=Const::ZSC_OPC_DELETE_QUEUE
+            		&& opcode !=Const::ZSC_OPC_FETCH_NODE)
 		return Const::toInt(Const::ZSC_REC_UOPC);
 
 	string sstatus = commonOpInternal(opcode, key, val, val2, result, lease);
@@ -102,6 +106,36 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 
 	return status;
 }
+int ZHTClient::push(const char *key, const char *val, const char *new_val, char *result){
+    
+    return 0;
+}
+int ZHTClient::push(const string &key, const string &val, const string &new_val, string &result){
+    
+    return 0;
+}
+
+int ZHTClient::pop(const char *key, const char *val, char *result){
+    return 0;
+}
+int ZHTClient::pop(const string &key, const string &val, string &result){
+    return 0;
+}
+
+int ZHTClient::delete_queue(const char *key, const char *val){
+    return 0;
+}
+int ZHTClient::delete_queue(const string &key, const string &val){
+    return 0;
+}
+
+int ZHTClient::fetch_node(const char *key, char *result){
+    return 0;
+}
+int ZHTClient::fetch_node(const string &key, string &result){
+    return 0;
+}
+
 
 int ZHTClient::lookup(const string &key, string &result) {
 

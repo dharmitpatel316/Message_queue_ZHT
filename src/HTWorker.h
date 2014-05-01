@@ -86,6 +86,15 @@ private:
 	string create_queue(const ZPack &zpack);
     	string create_queue_shared(const ZPack &zpack);
 
+	string push(const ZPack &zpack);
+	string push_shared(const ZPack &zpack);
+    	string pop(const ZPack &zpack);
+    	string pop_shared(const ZPack &zpack);
+    	string delete_queue(const ZPack &zpack);
+    	string delete_queue_shared(const ZPack &zpack);
+    	string fetch_node(const ZPack &zpack);
+    	string fetch_node_shared(const ZPack &zpack);
+
 private:
 	static void *threaded_state_change_callback(void *arg);
 	static string state_change_callback_internal(const ZPack &zpack);

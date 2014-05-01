@@ -72,6 +72,17 @@ public:
 	int teardown();
 	int create_queue(const string &key, const string &val);
 	int create_queue(const char *key, const char *val);
+	int push(const char *key, const char *val, const char *new_val, char *result);
+    	int push(const string &key, const string &val, const string &new_val, string &result);
+    
+    	int pop(const char *key, const char *val, char *result);
+    	int pop(const string &key, const string &val, string &result);
+    
+    	int delete_queue(const char *key, const char *val);
+    	int delete_queue(const string &key, const string &val);
+    
+    	int fetch_node(const char *key, char *result);
+    	int fetch_node(const string &key, string &result);
     	
 
 private:
