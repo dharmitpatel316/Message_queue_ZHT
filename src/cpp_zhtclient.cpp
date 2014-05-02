@@ -108,10 +108,18 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 }
 int ZHTClient::push(const char *key, const char *val, const char *new_val, char *result){
     
+	
     return 0;
 }
 int ZHTClient::push(const string &key, const string &val, const string &new_val, string &result){
     
+	//string val;
+	//string val2;
+	int rc = commonOp(Const::ZSC_OPC_PUSH, key, val, new_val, result, 1);
+
+	result = extract_value(result);
+
+	return rc;
     return 0;
 }
 
@@ -119,6 +127,8 @@ int ZHTClient::pop(const char *key, const char *val, char *result){
     return 0;
 }
 int ZHTClient::pop(const string &key, const string &val, string &result){
+
+	
     return 0;
 }
 

@@ -44,12 +44,18 @@ void test_lookup();
 void test_remove();
 void test_append();
 
-void create_uuid();
+string create_uuid();
 void dharmit_insert();
 void dharmit_lookup();
 void dharmit_remove();
 void dharmit_append();
 void dharmit_create_queue();
+void push();
+void pop();
+void delete_queue();
+void fetch_node();
+
+
 void runn();
 void printUsage(char *argv_0);
 
@@ -79,6 +85,33 @@ void test_lookup_shared(string key) {
 		printf("LOOKUP OK, rc(%d), value={%s}\n", rc, result.c_str());
 	else
 		printf("LOOKUP ERR, rc(%d), value={%s}\n", rc, result.c_str());
+}
+void push(){
+	string uuid=create_uuid();
+	cout<<uuid;
+	string val,queuename,result;
+	printf("Enter the message=");
+	cin>>val;
+	printf("Enter queue name=");
+	cin>>queuename;
+	int rc = zc.push(key, val,queuename,result);
+
+	if (rc == 0)
+		printf("INSERT OK, rc(%d)\n", rc);
+	else
+		printf("INSERT ERR, rc(%d)\n", rc);
+
+/*	if (rc == 0)
+		printf("LOOKUP OK, rc(%d), value={%s}\n", rc, 	result.c_str());
+	else
+		printf("LOOKUP ERR, rc(%d), value={%s}\n", rc, result.c_str());
+*/
+}
+void pop(){
+}
+void delete_queue(){
+}
+void fetch_node(){
 }
 
 void test_all_other() {
@@ -113,6 +146,7 @@ void runn(){
 	printf("5. exit\n");
 	printf("6. Create Queue\n");
 	printf("7. Create UUID\n");
+	printf("8. Push\n");
 	printf("Enter the option to select=");
 	scanf("%d",&n);
 	
@@ -139,8 +173,10 @@ void runn(){
 			case 6:
 			dharmit_create_queue();
 			break;
-			case 7"
-			create_uuid();
+			case 7:
+			cout<<create_uuid();
+			case 8:
+			push();			
 			break;
 			default:
 				break;
@@ -216,9 +252,9 @@ void printUsage(char *argv_0) {
 			"-z zht.conf -n neighbor.conf [-h(help)]");
 }
 
-void create_uuid(){
+string create_uuid(){
 	Uuid* s=new Uuid();
-	std::cout<<s->generate_uuid(); 
+	return s->generate_uuid(); 
 }
 void dharmit_insert(){
 	string key;

@@ -133,10 +133,63 @@ string HTWorker::run(const char *buf) {
 }
 
 string HTWorker::push(const ZPack &zpack){
-    return "";
+	string result = push_shared(zpack);
+#ifdef SCCB
+	_stub->sendBack(_addr, result.data(), result.size());
+	return "";
+#else
+	return result;
+#endif
+
+   // return "";
 }
 string HTWorker::push_shared(const ZPack &zpack){
-    return "";
+    string result;
+    
+	/*if (zpack.key().empty())
+		return Const::ZSC_REC_EMPTYKEY; //-1
+*/    
+	string key = zpack.key();
+		
+	cout<<"key="<<key<<endl;
+	string value1=zpack.val();
+	string value2=zpack.newval();
+
+	metadata->push(key);
+
+	
+	cout<<"value1="<<value1<<endl;
+	cout<<"value2="<<value2<<endl;	
+	cout<<"size="<<metadata->size()<<endl;
+
+	result=insert_shared(zpack);
+	return result;
+/*
+	int ret = PMAP->put(key, zpack.SerializeAsString());
+    
+	
+
+
+	if (ret != 0) {
+        
+		printf("thread[%lu] DB Error: fail to insert, rcode = %d\n",
+               pthread_self(), ret);
+		fflush(stdout);
+        
+		result = Const::ZSC_REC_NONEXISTKEY; //-92
+	} else {
+        
+		if (_instant_swap) {
+			PMAP->writeFileFG();
+		}
+        
+		result = Const::ZSC_REC_SUCC; //0, succeed.
+	}
+    
+	return result;
+*/
+
+	//return "";
 }
 string HTWorker::pop(const ZPack &zpack){
     return "";
