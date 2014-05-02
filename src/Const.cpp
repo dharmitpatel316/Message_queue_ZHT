@@ -134,6 +134,8 @@ const string Const::ZSC_REC_SECDTRY = "-97";
 const string Const::ZSC_REC_UOPC = "-98";
 const string Const::ZSC_REC_UNPR = "-99";
 const string Const::ZSC_REC_SUCC = "000";
+const string Const::ZSC_REC_ADDMETADATAQUEUE = "100";
+const string Const::ZSC_REC_REMOVEMETADATAQUEUE = "101";
 
 const int Const::ZSI_OPC_LOOKUP = 1;
 const int Const::ZSI_OPC_REMOVE = 2;

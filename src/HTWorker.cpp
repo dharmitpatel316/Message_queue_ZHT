@@ -60,6 +60,8 @@ queue<string>* HTWorker::metadata = new queue<string>;
 
 queue<string>* HTWorker::uuiddata = new queue<string>;
 
+string* HTWorker::firstUuid = new string;
+
 HTWorker::QUEUE* HTWorker::PQUEUE = new QUEUE();
 
 
@@ -146,8 +148,12 @@ string HTWorker::push(const ZPack &zpack){
 string HTWorker::push_shared(const ZPack &zpack){
     string result;
        
+	int flag=0;
 	string key = zpack.key();
 		
+	if(uuiddata->empty()){
+	flag=1;	
+	}
 	cout<<"key="<<key<<endl;
 	string value1=zpack.val();
 	string value2=zpack.newval();
@@ -161,6 +167,9 @@ string HTWorker::push_shared(const ZPack &zpack){
 
 	result=insert_shared(zpack);
 	cout<<"result="<<result<<endl;
+	if(flag==1){
+	result=Const::ZSC_REC_ADDMETADATAQUEUE;   //number 100 for updating the metadata queue
+	}
 
 	//-92  thread error no exist key
 	//0 success
@@ -173,16 +182,9 @@ string HTWorker::pop(const ZPack &zpack){
 
 string result = pop_shared(zpack);
 
-cout<<"result htworker="<<result<<endl;
-/*
-#ifdef SCCB
-_stub->sendBack(_addr, result.data(), result.size());
-	return "";
-#else
-	return result;
-#endif
-*/
 
+cout<<"result htworker pop="<<result<<endl;
+	
 	return result;
 
 }
@@ -192,36 +194,39 @@ string HTWorker::pop_shared(const ZPack &zpack){
 
 	string uuid="";
 	cout<<"empty="<<uuiddata->empty();
-if(!uuiddata->empty()) {
-	cout<<"size="<<uuiddata->size();
-       uuid=uuiddata->front();
-       uuiddata->pop(); 
-       cout<<uuid<<endl;
-	cout<<"size="<<uuiddata->size();
+	if(!uuiddata->empty()) {
+		cout<<"size="<<uuiddata->size();
+       		uuid=uuiddata->front();
+       		uuiddata->pop(); 
+       		cout<<uuid<<endl;
+		cout<<"size="<<uuiddata->size();
 	
-	string result = lookup_shared(zpack,uuid);
+		string result = lookup_shared(zpack,uuid);
 	#ifdef SCCB
-	_stub->sendBack(_addr, result.data(), result.size());
-	return "";
+		_stub->sendBack(_addr, result.data(), result.size());
+		return "";
 	#else
-	return result;
+		return result;
 	#endif
 
 //	return result;
 }
 
-else{
-	cout<<"uuid queue empty";
-	uuid="";	
-	string result = lookup_shared(zpack,uuid);
-	#ifdef SCCB
-	_stub->sendBack(_addr, result.data(), result.size());
-	return "";
-	#else
-	return result;
-	#endif
+	else{
+		cout<<"uuid queue empty";
+		uuid="";	
+		string result = lookup_shared(zpack,uuid);
+		
+		result=Const::ZSC_REC_REMOVEMETADATAQUEUE;
+		 		
+		#ifdef SCCB
+			_stub->sendBack(_addr, result.data(), result.size());
+			return "";
+		#else
+			return result;
+		#endif
 
-//return "";
+
 }
 	return "";
 }

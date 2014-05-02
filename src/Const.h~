@@ -171,6 +171,9 @@ public:
     	static const string ZSC_OPC_POP;
     	static const string ZSC_OPC_DELETE_QUEUE;
     	static const string ZSC_OPC_FETCH_NODE;	
+	static const string ZSC_REC_ADDMETADATAQUEUE;
+	static const string ZSC_REC_REMOVEMETADATAQUEUE;
+	
 
 	static const string ZSC_OPC_CMPSWP; //compare and swap item
 	static const string ZSC_OPC_STCHGCB; //state change call back

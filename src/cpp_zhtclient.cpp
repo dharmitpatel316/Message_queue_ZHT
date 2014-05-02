@@ -101,7 +101,18 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 
 	string sstatus = commonOpInternal(opcode, key, val, val2, result, lease);
 
+	cout<<"commonopstatus="<<sstatus<<endl;
+	if(sstatus=="100"){
+		cout<<"Add Entry to Metadata Queue"<<endl;
+		
+		sstatus="000";
+	}
+	if(sstatus=="101"){
+		cout<<"	Remove Entry to Metadata Queue"<<endl;
+		sstatus="000";
+	}
 	int status = Const::ZSI_REC_CLTFAIL;
+	cout<<"status="<<status<<endl;
 	if (!sstatus.empty())
 		status = Const::toInt(sstatus);
 
@@ -119,7 +130,7 @@ int ZHTClient::push(const string &key, const string &val, const string &new_val,
 	int rc = commonOp(Const::ZSC_OPC_PUSH, key, val, new_val, result, 1);
 
 	result = extract_value(result);
-
+	cout<<"result="<<result<<endl;
 	return rc;
     
 }
