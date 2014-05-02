@@ -88,7 +88,7 @@ void test_lookup_shared(string key) {
 }
 void push(){
 	string uuid=create_uuid();
-	cout<<uuid;
+	cout<<uuid<<endl;
 	string val,queuename,result;
 	printf("Enter the message=");
 	cin>>val;
@@ -97,9 +97,13 @@ void push(){
 	int rc = zc.push(uuid, val,queuename,result);
 
 	if (rc == 0)
-		printf("INSERT OK, rc(%d)\n", rc);
+		printf("PUSH OK, rc(%d)\n", rc);
 	else
-		printf("INSERT ERR, rc(%d)\n", rc);
+		printf("PUSH ERR, rc(%d)\n", rc);
+
+// based on the result.c_str() check the value and make fetch_node or update_node call.
+	
+
 
 /*	if (rc == 0)
 		printf("LOOKUP OK, rc(%d), value={%s}\n", rc, 	result.c_str());
@@ -108,6 +112,18 @@ void push(){
 */
 }
 void pop(){
+	string uuid=create_uuid();
+	cout<<uuid<<endl;
+	string queuename,result;
+	printf("Enter queue name=");
+	cin>>queuename;
+	
+	int rc=zc.pop(uuid,queuename,result);
+	if (rc == 0)
+		printf("POP OK, rc(%d), value={%s}\n", rc, 	result.c_str());
+	else
+		printf("POP ERR, rc(%d), value={%s}\n", rc, result.c_str());
+
 }
 void delete_queue(){
 }
@@ -147,6 +163,7 @@ void runn(){
 	printf("6. Create Queue\n");
 	printf("7. Create UUID\n");
 	printf("8. Push\n");
+	printf("9.Pop \n");
 	printf("Enter the option to select=");
 	scanf("%d",&n);
 	
@@ -177,6 +194,9 @@ void runn(){
 			cout<<create_uuid();
 			case 8:
 			push();			
+			break;
+			case 9:
+			pop();
 			break;
 			default:
 				break;

@@ -145,56 +145,61 @@ string HTWorker::push(const ZPack &zpack){
 }
 string HTWorker::push_shared(const ZPack &zpack){
     string result;
-    
-	/*if (zpack.key().empty())
-		return Const::ZSC_REC_EMPTYKEY; //-1
-*/    
+       
 	string key = zpack.key();
 		
 	cout<<"key="<<key<<endl;
 	string value1=zpack.val();
 	string value2=zpack.newval();
 
-	metadata->push(key);
+	uuiddata->push(key);
 
 	
 	cout<<"value1="<<value1<<endl;
 	cout<<"value2="<<value2<<endl;	
-	cout<<"size="<<metadata->size()<<endl;
+	cout<<"uuiddata size="<<uuiddata->size()<<endl;
 
 	result=insert_shared(zpack);
-/*
-	int ret = PMAP->put(key, zpack.SerializeAsString());
-    
-	
+	cout<<"result="<<result<<endl;
 
-
-	if (ret != 0) {
-        
-		printf("thread[%lu] DB Error: fail to insert, rcode = %d\n",
-               pthread_self(), ret);
-		fflush(stdout);
-        
-		result = Const::ZSC_REC_NONEXISTKEY; //-92
-	} else {
-        
-		if (_instant_swap) {
-			PMAP->writeFileFG();
-		}
-        
-		result = Const::ZSC_REC_SUCC; //0, succeed.
-	}
-    
+	//-92  thread error no exist key
+	//0 success
+	//-1 key error
+	// once done check the result and the give back the result so that based on that fetch_node or update_node can be called.
+ 
 	return result;
-*/
-
-	//return "";
 }
 string HTWorker::pop(const ZPack &zpack){
-    return "";
+
+string result = pop_shared(zpack);
+#ifdef SCCB
+_stub->sendBack(_addr, result.data(), result.size());
+	return "";
+#else
+	return result;
+#endif
+
+
+
+
 }
+
+
 string HTWorker::pop_shared(const ZPack &zpack){
-    return "";
+
+	cout<<"empty="<<uuiddata->empty();
+if(!uuiddata->empty()) {
+	cout<<"size="<<uuiddata->size();
+       string uuid=uuiddata->front();
+       uuiddata->pop(); 
+       cout<<uuid<<endl;
+	cout<<"size="<<uuiddata->size();
+	string result = lookup_shared(zpack,uuid);
+	return result;
+}else{
+	cout<<"uuid queue empty";
+	return "";
+}
 }
 string HTWorker::delete_queue(const ZPack &zpack){
     return "";
@@ -249,7 +254,31 @@ string HTWorker::insert(const ZPack &zpack) {
 	return result;
 #endif
 }
+string HTWorker::lookup_shared(const ZPack &zpack, string uuid) {
 
+	string result;
+
+	if (uuid=="")
+		return Const::ZSC_REC_EMPTYKEY; //-1
+
+	string key = uuid;
+	string *ret = PMAP->get(key);
+
+	if (ret == NULL) {
+
+		printf("thread[%lu] DB Error: lookup found nothing\n", pthread_self());
+		fflush(stdout);
+
+		result = Const::ZSC_REC_NONEXISTKEY;
+		result.append("Empty");
+	} else {
+
+		result = Const::ZSC_REC_SUCC;
+		result.append(*ret);
+	}
+
+	return result;
+}
 string HTWorker::lookup_shared(const ZPack &zpack) {
 
 	string result;

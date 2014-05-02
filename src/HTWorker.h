@@ -80,6 +80,7 @@ private:
 
 	string insert_shared(const ZPack &zpack);
 	string lookup_shared(const ZPack &zpack);
+	string lookup_shared(const ZPack &zpack,string uuid);
 	string append_shared(const ZPack &zpack);
 	string remove_shared(const ZPack &zpack);
 

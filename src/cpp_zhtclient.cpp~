@@ -120,16 +120,20 @@ int ZHTClient::push(const string &key, const string &val, const string &new_val,
 	result = extract_value(result);
 
 	return rc;
-    return 0;
+    
 }
 
 int ZHTClient::pop(const char *key, const char *val, char *result){
     return 0;
 }
 int ZHTClient::pop(const string &key, const string &val, string &result){
+	string new_val;
+	int rc = commonOp(Const::ZSC_OPC_POP, key, val, new_val, result, 1);
 
-	
-    return 0;
+	result = extract_value(result);
+	cout<<"rc="<<rc<<endl;
+	return rc;
+    
 }
 
 int ZHTClient::delete_queue(const char *key, const char *val){
