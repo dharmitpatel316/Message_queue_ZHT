@@ -96,7 +96,8 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 			&& opcode !=Const::ZSC_OPC_PUSH
             		&& opcode !=Const::ZSC_OPC_POP
             		&& opcode !=Const::ZSC_OPC_DELETE_QUEUE
-            		&& opcode !=Const::ZSC_OPC_FETCH_NODE)
+            		&& opcode !=Const::ZSC_OPC_FETCH_NODE
+			&& opcode !=Const::ZSC_OPC_ADD_NODE)
 		return Const::toInt(Const::ZSC_REC_UOPC);
 
 	string sstatus = commonOpInternal(opcode, key, val, val2, result, lease);
@@ -150,6 +151,13 @@ int ZHTClient::pop(const string &key, const string &val, string &result){
     
 }
 
+
+int ZHTClient::add_node(const char *key, char *result){
+    return 0;
+}
+int ZHTClient::add_node(const string &key, string &result){
+    return 0;
+}
 int ZHTClient::delete_queue(const char *key, const char *val){
     return 0;
 }

@@ -126,7 +126,10 @@ string HTWorker::run(const char *buf) {
     	}else if(zpack.opcode() == Const::ZSC_OPC_FETCH_NODE){
         
     	    result=fetch_node(zpack);
-    	} else {
+    	}else if(zpack.opcode() == Const::ZSC_OPC_ADD_NODE){
+        
+        result=add_node(zpack);
+    	}else {
 
 		result = Const::ZSC_REC_UOPC;
 	}
@@ -230,6 +233,14 @@ string HTWorker::pop_shared(const ZPack &zpack){
 }
 	return "";
 }
+
+string HTWorker::add_node(const ZPack &zpack){
+    return "0";
+}
+string HTWorker::add_node_shared(const Zpack &zpack){
+    return "0";
+}
+
 string HTWorker::delete_queue(const ZPack &zpack){
     return "";
 }

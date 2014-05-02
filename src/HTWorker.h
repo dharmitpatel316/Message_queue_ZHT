@@ -95,6 +95,8 @@ private:
     	string delete_queue_shared(const ZPack &zpack);
     	string fetch_node(const ZPack &zpack);
     	string fetch_node_shared(const ZPack &zpack);
+	string add_node(const ZPack &zpack);
+    	string add_node_shared(const ZPack &zpack);
 
 private:
 	static void *threaded_state_change_callback(void *arg);

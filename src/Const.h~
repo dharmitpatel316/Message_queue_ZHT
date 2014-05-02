@@ -170,7 +170,8 @@ public:
 	static const string ZSC_OPC_PUSH;
     	static const string ZSC_OPC_POP;
     	static const string ZSC_OPC_DELETE_QUEUE;
-    	static const string ZSC_OPC_FETCH_NODE;	
+    	static const string ZSC_OPC_FETCH_NODE;
+	static const string ZSC_OPC_ADD_NODE;
 	static const string ZSC_REC_ADDMETADATAQUEUE;
 	static const string ZSC_REC_REMOVEMETADATAQUEUE;
 	
@@ -213,7 +214,8 @@ public:
  	static const int ZSI_OPC_PUSH;
     	static const int ZSI_OPC_POP;
     	static const int ZSI_OPC_DELETE_QUEUE;
-    	static const int ZSI_OPC_FETCH_NODE;	
+    	static const int ZSI_OPC_FETCH_NODE;
+	static const int ZSI_OPC_ADD_NODE	
 
 	static const int ZSI_OPC_BRDDN_GMEM; //broadcast global membership done
 	static const int ZSI_OPC_OPR_CANCEL; //cancel an operation

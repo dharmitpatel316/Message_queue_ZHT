@@ -107,7 +107,7 @@ const string Const::ZSC_OPC_PUSH = "008";
 const string Const::ZSC_OPC_POP = "009";
 const string Const::ZSC_OPC_DELETE_QUEUE = "010";
 const string Const::ZSC_OPC_FETCH_NODE = "011";
-
+const string Const::ZSC_OPC_ADD_NODE = "012";
 
 const string Const::ZSC_OPC_BRDDN_GMEM = "087";
 const string Const::ZSC_OPC_OPR_CANCEL = "088";
@@ -147,6 +147,7 @@ const int Const::ZSI_OPC_PUSH = 7;
 const int Const::ZSI_OPC_POP = 8;
 const int Const::ZSI_OPC_DELETE_QUEUE = 9;
 const int Const::ZSI_OPC_FETCH_NODE = 10;
+const int Const::ZSI_OPC_ADD_NODE = 11;
 const int Const::ZSI_OPC_BRDDN_GMEM = 87;
 const int Const::ZSI_OPC_OPR_CANCEL = 88;
 const int Const::ZSI_OPC_GET_ASNGHB = 89;

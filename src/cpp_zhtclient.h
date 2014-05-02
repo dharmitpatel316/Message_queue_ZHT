@@ -84,6 +84,8 @@ public:
     	int fetch_node(const char *key, char *result);
     	int fetch_node(const string &key, string &result);
     	
+	int add_node(const char *key, char *result);
+    	int add_node(const string &key, string &result);
 
 private:
 	int commonOp(const string &opcode, const string &key, const string &val,
