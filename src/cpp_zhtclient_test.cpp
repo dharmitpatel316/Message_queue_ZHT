@@ -119,6 +119,7 @@ void pop(){
 	cin>>queuename;
 	
 	int rc=zc.pop(uuid,queuename,result);
+	printf("rc cpp_zhtclient_test value=%d\n",rc);
 	if (rc == 0)
 		printf("POP OK, rc(%d), value={%s}\n", rc, 	result.c_str());
 	else

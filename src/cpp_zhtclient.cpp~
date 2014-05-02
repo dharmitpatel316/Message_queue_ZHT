@@ -37,6 +37,7 @@
 #include "ConfHandler.h"
 #include "Env.h"
 #include "StrTokenizer.h"
+#include <iostream>
 
 using namespace iit::datasys::zht::dm;
 
@@ -124,14 +125,18 @@ int ZHTClient::push(const string &key, const string &val, const string &new_val,
 }
 
 int ZHTClient::pop(const char *key, const char *val, char *result){
-    return 0;
+	printf("POP WITH CHAR CALLED");    
+	return 0;
 }
 int ZHTClient::pop(const string &key, const string &val, string &result){
+		
 	string new_val;
 	int rc = commonOp(Const::ZSC_OPC_POP, key, val, new_val, result, 1);
 
 	result = extract_value(result);
-	cout<<"rc="<<rc<<endl;
+	printf("rc=%d\n",rc);
+	
+
 	return rc;
     
 }

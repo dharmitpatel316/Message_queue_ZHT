@@ -172,34 +172,58 @@ string HTWorker::push_shared(const ZPack &zpack){
 string HTWorker::pop(const ZPack &zpack){
 
 string result = pop_shared(zpack);
+
+cout<<"result htworker="<<result<<endl;
+/*
 #ifdef SCCB
 _stub->sendBack(_addr, result.data(), result.size());
 	return "";
 #else
 	return result;
 #endif
+*/
 
-
-
+	return result;
 
 }
 
 
 string HTWorker::pop_shared(const ZPack &zpack){
 
+	string uuid;
 	cout<<"empty="<<uuiddata->empty();
 if(!uuiddata->empty()) {
 	cout<<"size="<<uuiddata->size();
-       string uuid=uuiddata->front();
+       uuid=uuiddata->front();
        uuiddata->pop(); 
        cout<<uuid<<endl;
 	cout<<"size="<<uuiddata->size();
+	
 	string result = lookup_shared(zpack,uuid);
-	return result;
-}else{
-	cout<<"uuid queue empty";
+	#ifdef SCCB
+	_stub->sendBack(_addr, result.data(), result.size());
 	return "";
+	#else
+	return result;
+	#endif
+
+//	return result;
 }
+
+else{
+	cout<<"uuid queue empty";
+	uuid="";	
+	string result = lookup_shared(zpack,uuid);
+	#ifdef SCCB
+	_stub->sendBack(_addr, result.data(), result.size());
+	return "";
+	#else
+	return result;
+	#endif
+
+//return "";
+}
+	return "";
 }
 string HTWorker::delete_queue(const ZPack &zpack){
     return "";
