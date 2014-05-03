@@ -123,7 +123,7 @@ private:
 	static int SCCB_POLL_INTERVAL;
 	static queue<string> *metadata;
 	static queue<string> *uuiddata;
-	static string *firstUuid;
+	static string firstUuid;
 };
 
 #endif /* HTWORKER_H_ */

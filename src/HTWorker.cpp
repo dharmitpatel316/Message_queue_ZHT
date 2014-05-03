@@ -60,7 +60,7 @@ queue<string>* HTWorker::metadata = new queue<string>;
 
 queue<string>* HTWorker::uuiddata = new queue<string>;
 
-string* HTWorker::firstUuid = new string;
+string HTWorker::firstUuid;
 
 HTWorker::QUEUE* HTWorker::PQUEUE = new QUEUE();
 
@@ -80,6 +80,7 @@ HTWorker::HTWorker(const ProtoAddr& addr, const ProtoStub* const stub) :
 		_addr(addr), _stub(stub), _instant_swap(get_instant_swap()) {
 
 	init_me();
+	
 }
 
 HTWorker::~HTWorker() {
@@ -171,7 +172,9 @@ string HTWorker::push_shared(const ZPack &zpack){
 	result=insert_shared(zpack);
 	cout<<"result="<<result<<endl;
 	if(flag==1){
+	firstUuid=key;
 	result=Const::ZSC_REC_ADDMETADATAQUEUE;   //number 100 for updating the metadata queue
+		
 	}
 
 	//-92  thread error no exist key
@@ -221,7 +224,15 @@ string HTWorker::pop_shared(const ZPack &zpack){
 		string result = lookup_shared(zpack,uuid);
 		
 		result=Const::ZSC_REC_REMOVEMETADATAQUEUE;
-		 		
+		//const string s=firstUuid;
+		if(firstUuid==""){		
+		result="200";
+		}
+		else{
+		result=firstUuid;
+		firstUuid="";		
+		}
+		  		
 		#ifdef SCCB
 			_stub->sendBack(_addr, result.data(), result.size());
 			return "";
@@ -235,14 +246,33 @@ string HTWorker::pop_shared(const ZPack &zpack){
 }
 
 string HTWorker::add_node(const ZPack &zpack){
-    return "0";
+    	
+	
+		cout<<"metadata size="<<metadata->size()<<endl;
+		string result=add_node_shared(zpack);	
+ 		cout<<"metadata size="<<metadata->size()<<endl;
+		#ifdef SCCB
+			_stub->sendBack(_addr, result.data(), result.size());
+			return "";
+		#else
+			return result;
+		#endif
+
+	//return "000";
 }
 string HTWorker::add_node_shared(const ZPack &zpack){
-    return "0";
+    	
+	string val=zpack.val();
+	cout<<"metadata value pushed="<<val<<endl;	
+	metadata->push(val);
+	cout<<"metadata queue size="<<metadata->size();
+	string result = Const::ZSC_REC_SUCC;
+	return result;
 }
 
 string HTWorker::delete_queue(const ZPack &zpack){
-    return "";
+    
+
 }
 string HTWorker::delete_queue_shared(const ZPack &zpack){
     return "";

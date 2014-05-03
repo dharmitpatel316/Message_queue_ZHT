@@ -103,15 +103,36 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 	string sstatus = commonOpInternal(opcode, key, val, val2, result, lease);
 
 	cout<<"commonopstatus="<<sstatus<<endl;
+		
 	if(sstatus=="100"){
 		cout<<"Add Entry to Metadata Queue"<<endl;
+		const string opcode1=Const::ZSC_OPC_ADD_NODE;		
+		const string value=key;		
+		const string keys="q1";
+		sstatus=commonOpInternal(opcode1, keys, value, val2, result, lease);
 		
-		sstatus="000";
+		//sstatus="000";
 	}
 	if(sstatus=="101"){
-		cout<<"	Remove Entry to Metadata Queue"<<endl;
-		sstatus="000";
+	//node didnt have any message because it got emptied.
+	
+	//string opc=Const::getuuid();
+		cout<<"	Remove Entry to Metadata Queue="<<sstatus<<endl;
+		
+		const string opcode1=Const::ZSC_OPC_FETCH_NODE;		
+		const string value=sstatus;		
+		const string keys="q1";
+		sstatus=commonOpInternal(opcode1, keys, value, val2, result, lease);
+
+		//sstatus="000";
 	}
+	if(sstatus=="200"){
+	
+	//node didnt had any message before but the user tried to fetch
+	sstatus="000";
+	}	
+	
+
 	int status = Const::ZSI_REC_CLTFAIL;
 	cout<<"status="<<status<<endl;
 	if (!sstatus.empty())
@@ -414,7 +435,13 @@ string ZHTClient::commonOpInternal(const string &opcode, const string &key,
 	} else {
 
 		result = srecv.substr(3); //the left, if any, is lookup result or second-try zpack
+		//cout<<"srecv string size="<<srecv.size()<<endl;
+		if(srecv.size()==36){
+		sstatus = srecv.substr(0,36);		
+		}else{		
 		sstatus = srecv.substr(0, 3); //status returned, the first three chars, like 001, -98...
+		}		
+				
 	}
 
 	free(buf);
