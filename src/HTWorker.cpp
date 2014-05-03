@@ -60,6 +60,7 @@ queue<string>* HTWorker::metadata = new queue<string>;
 
 queue<string>* HTWorker::uuiddata = new queue<string>;
 
+list<string>* HTWorker::meta = new list<string>;
 string HTWorker::firstUuid;
 
 HTWorker::QUEUE* HTWorker::PQUEUE = new QUEUE();
@@ -248,9 +249,9 @@ string HTWorker::pop_shared(const ZPack &zpack){
 string HTWorker::add_node(const ZPack &zpack){
     	
 	
-		cout<<"metadata size="<<metadata->size()<<endl;
+		cout<<"metadata size="<<meta->size()<<endl;
 		string result=add_node_shared(zpack);	
- 		cout<<"metadata size="<<metadata->size()<<endl;
+ 		cout<<"metadata size="<<meta->size()<<endl;
 		#ifdef SCCB
 			_stub->sendBack(_addr, result.data(), result.size());
 			return "";
@@ -264,8 +265,8 @@ string HTWorker::add_node_shared(const ZPack &zpack){
     	
 	string val=zpack.val();
 	cout<<"metadata value pushed="<<val<<endl;	
-	metadata->push(val);
-	cout<<"metadata queue size="<<metadata->size();
+	meta->push_front(val);
+	cout<<"metadata queue size="<<meta->size();
 	string result = Const::ZSC_REC_SUCC;
 	return result;
 }
@@ -278,10 +279,27 @@ string HTWorker::delete_queue_shared(const ZPack &zpack){
     return "";
 }
 string HTWorker::fetch_node(const ZPack &zpack){
-    return "";
+		cout<<"before fetch metadata size="<<meta->size()<<endl;		
+		string result=fetch_node_shared(zpack);	
+ 		cout<<"after fetch metadata size="<<meta->size()<<endl;
+		#ifdef SCCB
+			_stub->sendBack(_addr, result.data(), result.size());
+			return "";
+		#else
+			return result;
+		#endif    
+
+	
 }
 string HTWorker::fetch_node_shared(const ZPack &zpack){
-    return "";
+    
+	if(zpack.val().empty()){
+		return Const::ZSC_REC_EMPTYKEY;
+	}	
+	meta->remove(zpack.val());
+	string result = Const::ZSC_REC_SUCC;
+
+	return result;
 }
 
 string HTWorker::insert_shared(const ZPack &zpack) {
@@ -394,18 +412,18 @@ string HTWorker::create_queue_shared(const ZPack &zpack){
 		return Const::ZSC_REC_EMPTYKEY; //-1
     
 	string key = zpack.key();
-	metadata->push(key);
+	meta->push_front(key);
 		
 	cout<<"key="<<key<<endl;
 	string value1=zpack.val();
 	string value2=zpack.newval();
 
-	metadata->push(value1);
+	meta->push_front(value1);
 
 	
 	cout<<"value1="<<value1<<endl;
 	cout<<"value2="<<value2<<endl;	
-	cout<<"size="<<metadata->size()<<endl;
+	cout<<"size="<<meta->size()<<endl;
 	int ret = PMAP->put(key, zpack.SerializeAsString());
     
 	

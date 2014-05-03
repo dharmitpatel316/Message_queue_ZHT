@@ -36,6 +36,7 @@
 #include "proxy_stub.h"
 #include <string>
 #include <queue>
+#include <list>
 #include "TSafeQueue-impl.h"
 using namespace std;
 using namespace iit::cs550::finalproj;
@@ -123,7 +124,7 @@ private:
 	static int SCCB_POLL_INTERVAL;
 	static queue<string> *metadata;
 	static queue<string> *uuiddata;
-	static string *firstUuid;
+	static string firstUuid;
 };
 
 #endif /* HTWORKER_H_ */

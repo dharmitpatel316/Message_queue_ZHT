@@ -86,6 +86,7 @@ public:
     	
 	int add_node(const char *key, char *result);
     	int add_node(const string &key, string &result);
+	
 
 private:
 	int commonOp(const string &opcode, const string &key, const string &val,
@@ -94,9 +95,11 @@ private:
 			const string &val, const string &val2, string &result, int lease);
 	string extract_value(const string &returnStr);
 
+
 private:
 	ProtoProxy *_proxy;
 	int _msg_maxsize;
+	
 };
 
 #endif /* ZHTCLIENT_H_ */

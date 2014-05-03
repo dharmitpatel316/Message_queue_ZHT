@@ -36,6 +36,7 @@
 #include "proxy_stub.h"
 #include <string>
 #include <queue>
+#include <list>
 #include "TSafeQueue-impl.h"
 using namespace std;
 using namespace iit::cs550::finalproj;
@@ -124,6 +125,7 @@ private:
 	static queue<string> *metadata;
 	static queue<string> *uuiddata;
 	static string firstUuid;
+	static list<string> *meta;
 };
 
 #endif /* HTWORKER_H_ */
