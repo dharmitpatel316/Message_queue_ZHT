@@ -1,0 +1,38 @@
+#include "cpp_zhtclient.h"
+#include "uuid.h"
+
+#include  <getopt.h>
+#include  <stdlib.h>
+#include   <stdio.h>
+#include   <string>
+#include   <exception>
+#include <iostream>
+
+using namespace std;
+
+void dharmit_create_queue();
+void push();
+void pop();
+void delete_queue();
+void fetch_node();
+void print_result;
+void create_message();
+
+int main(){
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+

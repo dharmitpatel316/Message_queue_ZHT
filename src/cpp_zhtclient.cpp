@@ -133,6 +133,9 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 		const string keys="q1";
 		sstatus=commonOpInternal(opcode1, keys, value, val2, result, lease);
 
+		
+
+		sstatus="-1";
 		//sstatus="000";
 	}
 

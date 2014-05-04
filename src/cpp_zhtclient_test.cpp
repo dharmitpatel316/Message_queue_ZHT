@@ -37,6 +37,7 @@
 #include   <string>
 #include   <exception>
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 void test_insert();
@@ -44,6 +45,7 @@ void test_lookup();
 void test_remove();
 void test_append();
 
+void runtest();
 string create_uuid();
 void dharmit_insert();
 void dharmit_lookup();
@@ -130,7 +132,34 @@ void delete_queue(){
 }
 void fetch_node(){
 }
+void runtest(){
 
+	string msg="dharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmit";
+string queuename="q1",result;
+
+int countpush=0,countpop=0;
+clock_t start=clock();
+
+for(int i=0;i<100;i++){
+string uuid=create_uuid();
+int rc = zc.push(uuid, msg,queuename,result);
+if(rc==0)
+countpush++;
+}
+
+
+for(int i=0;i<101;i++){
+string uuid=create_uuid();
+int rc=zc.pop(uuid,queuename,result);
+if(rc==0){
+	countpop++;
+}
+}
+cout<<"Time Difference: "<<clock() - start<<endl;
+cout<<"PUSH OPERATION ="<<countpush<<"/100"<<endl;
+cout<<"POP OPERATION ="<<countpop<<"/101"<<endl;
+
+}
 void test_all_other() {
 
 	string key = "hello";
@@ -165,6 +194,7 @@ void runn(){
 	printf("7. Create UUID\n");
 	printf("8. Push\n");
 	printf("9.Pop \n");
+	printf("10. Test \n");
 	printf("Enter the option to select=");
 	scanf("%d",&n);
 	
@@ -198,6 +228,9 @@ void runn(){
 			break;
 			case 9:
 			pop();
+			break;
+			case 10:
+			runtest();
 			break;
 			default:
 				break;

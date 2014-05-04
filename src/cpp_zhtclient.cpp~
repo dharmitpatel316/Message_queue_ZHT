@@ -118,7 +118,7 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 	}
 	
 	if(sstatus=="200"){
-	cout<<"Message Not Found";
+	cout<<"Message Not Found"<<endl;
 	//node didnt had any message before but the user tried to fetch
 	sstatus="000";
 	}	
@@ -132,6 +132,9 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 		const string value=sstatus;		
 		const string keys="q1";
 		sstatus=commonOpInternal(opcode1, keys, value, val2, result, lease);
+
+		
+
 
 		//sstatus="000";
 	}
