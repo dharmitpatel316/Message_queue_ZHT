@@ -165,6 +165,7 @@ myfile.close();
 
 myfile.open("receiving.csv", ios::out | ios::app);
 int tots=0;
+int t=0;
 for(int i=0;;i++,tots++){
 start=clock();
 string uuid=create_uuid();
@@ -173,7 +174,10 @@ if(rc==0){
 	countpop++;
 	myfile<<countpop<<","<<((float)(clock()-start))/CLOCKS_PER_SEC<<"\n";
 }
-if(countpop==n)break;
+if(countpop==n){
+	t++;
+}
+if(t==5)break;
 }
 myfile.close();
 cout<<"Time Difference: "<<clock() - start<<endl;
