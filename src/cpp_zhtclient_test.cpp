@@ -147,17 +147,18 @@ if(rc==0)
 countpush++;
 }
 
-
-for(int i=0;i<101;i++){
+int tots=0;
+for(int i=0;;i++,tots++){
 string uuid=create_uuid();
 int rc=zc.pop(uuid,queuename,result);
 if(rc==0){
 	countpop++;
 }
+if(countpop==100)break;
 }
 cout<<"Time Difference: "<<clock() - start<<endl;
 cout<<"PUSH OPERATION ="<<countpush<<"/100"<<endl;
-cout<<"POP OPERATION ="<<countpop<<"/101"<<endl;
+cout<<"POP OPERATION ="<<countpop<<"/"<<tots+1<<endl;
 
 }
 void test_all_other() {

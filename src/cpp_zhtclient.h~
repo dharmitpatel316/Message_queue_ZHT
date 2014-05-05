@@ -45,7 +45,6 @@ using namespace std;
  */
 class ZHTClient {
 
-	string uum;
 public:
 	ZHTClient();
 

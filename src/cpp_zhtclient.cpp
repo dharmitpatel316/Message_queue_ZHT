@@ -120,7 +120,7 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 	if(sstatus=="200"){
 	cout<<"Message Not Found"<<endl;
 	//node didnt had any message before but the user tried to fetch
-	sstatus="000";
+	sstatus="-92";
 	}	
 	if(sstatus.size()>3){
 	//node didnt have any message because it got emptied.
