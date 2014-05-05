@@ -38,6 +38,10 @@
 #include   <exception>
 #include <iostream>
 #include <ctime>
+#include <time.h>
+#include <fstream>
+
+
 using namespace std;
 
 void test_insert();
@@ -134,31 +138,47 @@ void fetch_node(){
 }
 void runtest(){
 
-	string msg="dharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmit";
+int n;
+cout<<"Enter the number of messages=";
+cin>>n;
+
+	string msg="dharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmit";
 string queuename="q1",result;
 
-int countpush=0,countpop=0;
-clock_t start=clock();
+	ofstream myfile;
 
-for(int i=0;i<100;i++){
+int countpush=0,countpop=0;
+clock_t start;
+//clock_t start=clock();
+myfile.open("sending.csv", ios::out | ios::app);
+for(int i=0;i<n;i++){
+
+start=clock();
 string uuid=create_uuid();
 int rc = zc.push(uuid, msg,queuename,result);
 if(rc==0)
 countpush++;
+myfile<<i<<","<<((float)(clock()-start))/CLOCKS_PER_SEC<<"\n";
 }
 
+myfile.close();
+
+myfile.open("receiving.csv", ios::out | ios::app);
 int tots=0;
 for(int i=0;;i++,tots++){
+start=clock();
 string uuid=create_uuid();
 int rc=zc.pop(uuid,queuename,result);
 if(rc==0){
 	countpop++;
+	myfile<<countpop<<","<<((float)(clock()-start))/CLOCKS_PER_SEC<<"\n";
 }
-if(countpop==100)break;
+if(countpop==n)break;
 }
+myfile.close();
 cout<<"Time Difference: "<<clock() - start<<endl;
-cout<<"PUSH OPERATION ="<<countpush<<"/100"<<endl;
-cout<<"POP OPERATION ="<<countpop<<"/"<<tots<<endl;
+cout<<"PUSH OPERATION ="<<countpush<<"/"<<n<<endl;
+cout<<"POP OPERATION ="<<tots+1<<"/"<<countpop<<endl;
 
 }
 void test_all_other() {
