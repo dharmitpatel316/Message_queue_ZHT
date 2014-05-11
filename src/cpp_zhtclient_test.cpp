@@ -44,6 +44,14 @@
 #include <boost/lexical_cast.hpp>
 
 using namespace std;
+ZHTClient zhtclient;
+
+struct thread_data{
+   long  thread_id;
+   ZHTClient *zc;
+};
+
+
 
 void test_insert();
 void test_lookup();
@@ -145,17 +153,16 @@ void *threadedTest(void *threadid){
 
 long tid;
 tid = (long)threadid;
+
    printf("Sending of Message Started #%ld!\n", tid);
    
+
 
 	string msg="dharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmitdharmit";
 string queuename="q1",result;
 
 	ofstream myfile;
-/*
-std::stringstream mystream;
-mystream << tid;
-*/
+
 
 string sen="sending"+boost::lexical_cast<std::string>(tid)+".csv";
 string rec="receiving"+boost::lexical_cast<std::string>(tid)+".csv";
@@ -199,9 +206,6 @@ cout<<"Time Difference:"<<((float)(clock() - start))/CLOCKS_PER_SEC<<endl;
 cout<<"PUSH OPERATION ="<<countpush<<"/"<<numofmessagesperthread<<endl;
 cout<<"POP OPERATION ="<<tots+1<<"/"<<countpop<<endl;
 
-
-
-
 	pthread_exit(NULL);
 
 }
@@ -216,37 +220,35 @@ cin>>numofthreads;
 numofmessagesperthread=numofmessages/numofthreads;
 
 
+
 pthread_t thread[numofthreads];
+
    pthread_attr_t attr;
    int rc;
    long t;
    void *status;
 
-   /* Initialize and set thread detached attribute */
-   pthread_attr_init(&attr);
-   pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+   
 
 clock_t start=clock();
 
 for(t=0; t<numofthreads; t++) {
+	
+	
       printf("Main: creating thread %ld\n", t);
-      rc = pthread_create(&thread[t], &attr, threadedTest, (void *)t); 
+      rc = pthread_create(&thread[t], NULL, threadedTest, (void *)t); 
       if (rc) {
          printf("ERROR; return code from pthread_create() is %d\n", rc);
          exit(-1);
          }
       }
 
-   /* Free attribute and wait for the other threads */
-   pthread_attr_destroy(&attr);
-   for(t=0; t<numofthreads; t++) {
-      rc = pthread_join(thread[t], &status);
-      if (rc) {
-         printf("ERROR; return code from pthread_join() is %d\n", rc);
-         exit(-1);
-         }
-      printf("Main: completed join with thread %ld having a status of %ld\n",t,(long)status);
-      }
+	
+for(t=0; t<numofthreads; t++) {
+
+	pthread_join(thread[t], (void**)&status);
+	
+}      
  cout<<"Test Completed:"<<((float)(clock() - start))/CLOCKS_PER_SEC<<endl;
 
 }
