@@ -39,7 +39,6 @@
 #include "StrTokenizer.h"
 #include <iostream>
 
-
 using namespace iit::datasys::zht::dm;
 
 ZHTClient::ZHTClient() :

@@ -194,7 +194,8 @@ if(countpop==numofmessagesperthread){
 //if(t==5)break;
 }
 myfile.close();
-cout<<"Time Difference: "<<clock() - start<<endl;
+cout<<"Thread="<<tid<<endl;
+cout<<"Time Difference:"<<((float)(clock() - start))/CLOCKS_PER_SEC<<endl;
 cout<<"PUSH OPERATION ="<<countpush<<"/"<<numofmessagesperthread<<endl;
 cout<<"POP OPERATION ="<<tots+1<<"/"<<countpop<<endl;
 
@@ -225,6 +226,8 @@ pthread_t thread[numofthreads];
    pthread_attr_init(&attr);
    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
+clock_t start=clock();
+
 for(t=0; t<numofthreads; t++) {
       printf("Main: creating thread %ld\n", t);
       rc = pthread_create(&thread[t], &attr, threadedTest, (void *)t); 
@@ -244,7 +247,7 @@ for(t=0; t<numofthreads; t++) {
          }
       printf("Main: completed join with thread %ld having a status of %ld\n",t,(long)status);
       }
- 
+ cout<<"Test Completed:"<<((float)(clock() - start))/CLOCKS_PER_SEC<<endl;
 
 }
 void test_all_other() {

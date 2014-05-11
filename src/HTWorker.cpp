@@ -159,19 +159,19 @@ string HTWorker::push_shared(const ZPack &zpack){
 	if(uuiddata->empty()){
 	flag=1;	
 	}
-	cout<<"key="<<key<<endl;
+//	cout<<"key="<<key<<endl;
 	string value1=zpack.val();
 	string value2=zpack.newval();
 
 	uuiddata->push(key);
 
 	
-	cout<<"value1="<<value1<<endl;
-	cout<<"value2="<<value2<<endl;	
-	cout<<"uuiddata size="<<uuiddata->size()<<endl;
+//	cout<<"value1="<<value1<<endl;
+//	cout<<"value2="<<value2<<endl;	
+//	cout<<"uuiddata size="<<uuiddata->size()<<endl;
 
 	result=insert_shared(zpack);
-	cout<<"result="<<result<<endl;
+//	cout<<"result="<<result<<endl;
 	if(flag==1){
 	firstUuid=key;
 	result=Const::ZSC_REC_ADDMETADATAQUEUE;   //number 100 for updating the metadata queue
@@ -190,7 +190,7 @@ string HTWorker::pop(const ZPack &zpack){
 string result = pop_shared(zpack);
 
 
-cout<<"result htworker pop="<<result<<endl;
+//cout<<"result htworker pop="<<result<<endl;
 	
 	return result;
 
@@ -200,13 +200,13 @@ cout<<"result htworker pop="<<result<<endl;
 string HTWorker::pop_shared(const ZPack &zpack){
 
 	string uuid="";
-	cout<<"empty="<<uuiddata->empty();
+	//cout<<"empty="<<uuiddata->empty();
 	if(!uuiddata->empty()) {
-		cout<<"size="<<uuiddata->size();
+	//	cout<<"size="<<uuiddata->size();
        		uuid=uuiddata->front();
        		uuiddata->pop(); 
-       		cout<<uuid<<endl;
-		cout<<"size="<<uuiddata->size();
+       	//	cout<<uuid<<endl;
+//		cout<<"size="<<uuiddata->size();
 	
 		string result = lookup_shared(zpack,uuid);
 	#ifdef SCCB
@@ -220,7 +220,7 @@ string HTWorker::pop_shared(const ZPack &zpack){
 }
 
 	else{
-		cout<<"uuid queue empty";
+//		cout<<"uuid queue empty";
 		uuid="";	
 		string result = lookup_shared(zpack,uuid);
 		
@@ -249,9 +249,9 @@ string HTWorker::pop_shared(const ZPack &zpack){
 string HTWorker::add_node(const ZPack &zpack){
     	
 	
-		cout<<"metadata size="<<meta->size()<<endl;
+//		cout<<"metadata size="<<meta->size()<<endl;
 		string result=add_node_shared(zpack);	
- 		cout<<"metadata size="<<meta->size()<<endl;
+ //		cout<<"metadata size="<<meta->size()<<endl;
 		#ifdef SCCB
 			_stub->sendBack(_addr, result.data(), result.size());
 			return "";
@@ -264,9 +264,9 @@ string HTWorker::add_node(const ZPack &zpack){
 string HTWorker::add_node_shared(const ZPack &zpack){
     	
 	string val=zpack.val();
-	cout<<"metadata value pushed="<<val<<endl;	
+//	cout<<"metadata value pushed="<<val<<endl;	
 	meta->push_front(val);
-	cout<<"metadata queue size="<<meta->size();
+//	cout<<"metadata queue size="<<meta->size();
 	string result = Const::ZSC_REC_SUCC;
 	return result;
 }
@@ -279,9 +279,9 @@ string HTWorker::delete_queue_shared(const ZPack &zpack){
     return "";
 }
 string HTWorker::fetch_node(const ZPack &zpack){
-		cout<<"before fetch metadata size="<<meta->size()<<endl;		
+//		cout<<"before fetch metadata size="<<meta->size()<<endl;		
 		string result=fetch_node_shared(zpack);	
- 		cout<<"after fetch metadata size="<<meta->size()<<endl;
+ //		cout<<"after fetch metadata size="<<meta->size()<<endl;
 		#ifdef SCCB
 			_stub->sendBack(_addr, result.data(), result.size());
 			return "";
@@ -414,16 +414,16 @@ string HTWorker::create_queue_shared(const ZPack &zpack){
 	string key = zpack.key();
 	meta->push_front(key);
 		
-	cout<<"key="<<key<<endl;
+//	cout<<"key="<<key<<endl;
 	string value1=zpack.val();
 	string value2=zpack.newval();
 
 	meta->push_front(value1);
 
 	
-	cout<<"value1="<<value1<<endl;
-	cout<<"value2="<<value2<<endl;	
-	cout<<"size="<<meta->size()<<endl;
+//	cout<<"value1="<<value1<<endl;
+//	cout<<"value2="<<value2<<endl;	
+//	cout<<"size="<<meta->size()<<endl;
 	int ret = PMAP->put(key, zpack.SerializeAsString());
     
 	

@@ -105,10 +105,10 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 
 	string sstatus = commonOpInternal(opcode, key, val, val2, result, lease);
 
-	cout<<"commonopstatus="<<sstatus<<endl;
+//	cout<<"commonopstatus="<<sstatus<<endl;
 		
 	if(sstatus=="100"){
-		cout<<"Add Entry to Metadata Queue"<<endl;
+//		cout<<"Add Entry to Metadata Queue"<<endl;
 		const string opcode1=Const::ZSC_OPC_ADD_NODE;		
 		const string value=key;		
 		const string keys="q1";
@@ -118,7 +118,7 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 	}
 	
 	if(sstatus=="200"){
-	cout<<"Message Not Found"<<endl;
+//	cout<<"Message Not Found"<<endl;
 	//node didnt had any message before but the user tried to fetch
 	sstatus="-92";
 	}	
@@ -126,7 +126,7 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 	//node didnt have any message because it got emptied.
 	
 	//string opc=Const::getuuid();
-		cout<<"	Remove Entry to Metadata Queue="<<sstatus<<endl;
+//		cout<<"	Remove Entry to Metadata Queue="<<sstatus<<endl;
 		
 		const string opcode1=Const::ZSC_OPC_FETCH_NODE;		
 		const string value=sstatus;		
@@ -140,7 +140,7 @@ int ZHTClient::commonOp(const string &opcode, const string &key,
 	}
 
 	int status = Const::ZSI_REC_CLTFAIL;
-	cout<<"status="<<status<<endl;
+//	cout<<"status="<<status<<endl;
 	if (!sstatus.empty())
 		status = Const::toInt(sstatus);
 
@@ -158,7 +158,7 @@ int ZHTClient::push(const string &key, const string &val, const string &new_val,
 	int rc = commonOp(Const::ZSC_OPC_PUSH, key, val, new_val, result, 1);
 
 	result = extract_value(result);
-	cout<<"result="<<result<<endl;
+//	cout<<"result="<<result<<endl;
 	return rc;
     
 }
